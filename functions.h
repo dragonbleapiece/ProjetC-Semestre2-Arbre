@@ -3,4 +3,4 @@
 
 
 
-#endif // FUNCTIONS_H_INCLUDED
+#endif /* FUNCTIONS_H_INCLUDED */

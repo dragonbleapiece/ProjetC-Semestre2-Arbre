@@ -10,4 +10,4 @@ typedef struct noeud {
     struct noeud *filsg, *frered;
 } Noeud, *Arbre;
 
-#endif // ARBRE_H_INCLUDED
+#endif /* ARBRE_H_INCLUDED */
