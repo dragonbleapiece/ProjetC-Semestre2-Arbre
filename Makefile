@@ -1,16 +1,16 @@
 CC=gcc
 CFLAGS=-W -Wall -ansi -pedantic -g
 LDFLAGS=
-EXEC=arbre
+EXEC=Lexique
 SRC= $(wildcard *.c)
 OBJ= $(SRC:.c=.o)
 
 all: $(EXEC)
 
-arbre: $(OBJ)
+Lexique: $(OBJ)
 	@$(CC) -o $@ $^ $(LDFLAGS)
 
-main.o: arbre.h
+main.o: arbre.struct.h
 
 %.o: %.c
 	@$(CC) -o $@ -c $< $(CFLAGS)

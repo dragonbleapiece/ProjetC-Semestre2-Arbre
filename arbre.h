@@ -2,12 +2,10 @@
 #define ARBRE_H_INCLUDED
 
 #include <stdlib.h>
+#include "arbre.struct.h"
 
-#define MAX 50
+Noeud *allocNoeud(unsigned char lettre);
 
-typedef struct noeud {
-    unsigned char lettre;
-    struct noeud *filsg, *frered;
-} Noeud, *Arbre;
+void freeArbre(Arbre *a);
 
 #endif /* ARBRE_H_INCLUDED */
