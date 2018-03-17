@@ -57,18 +57,51 @@ int searchMot(Arbre a, const unsigned char *mot) {
     }
 }
 
-void printArbre_rec(Arbre a, unsigned char *buffer, size_t indice) {
+void saveNoeud(Arbre a, FILE *out) {
+    unsigned char c;
     if(a != NULL) {
-        buffer[indice] = a->lettre;
-        if(a->lettre != '\0')
-            printArbre_rec(a->filsg, buffer, indice + 1);
-        else
-            printf("%s\n", buffer);
-        printArbre_rec(a->frered, buffer, indice);
+        c = (a->lettre == '\0') ? ' ' : a->lettre;
+        fprintf(out, "%c", c);
+        saveNoeud(a->filsg, out);
+        saveNoeud(a->frered, out);
+    } else {
+        fprintf(out, "\n");
     }
 }
 
-void printArbre(Arbre a) {
+int constructArbre(Arbre *a, FILE *in) {
+    char c = fgetc(in);
+    switch(c) {
+        case(' '):
+            *a = allocNoeud('\0');
+            break;
+        case('\n'):
+            return 1;
+            break;
+        case(EOF):
+            return 0;
+            break;
+        default:
+            *a = allocNoeud(c);
+            break;
+    }
+
+    if(*a == NULL) return 0;
+    return constructArbre(&(*a)->filsg, in) && constructArbre(&(*a)->frered, in);
+}
+
+void printArbre_rec(Arbre a, unsigned char *buffer, size_t indice, FILE *out) {
+    if(a != NULL) {
+        buffer[indice] = a->lettre;
+        if(a->lettre != '\0')
+            printArbre_rec(a->filsg, buffer, indice + 1, out);
+        else
+            fprintf(out, "%s\n", buffer);
+        printArbre_rec(a->frered, buffer, indice, out);
+    }
+}
+
+void printArbre(Arbre a, FILE *out) {
     unsigned char buffer[MAX];
-    printArbre_rec(a, buffer, 0);
+    printArbre_rec(a, buffer, 0, out);
 }

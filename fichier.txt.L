@@ -1,0 +1,9 @@
+ballade
+en
+est
+jamais
+mais
+michel
+n'est
+parti
+revenu
