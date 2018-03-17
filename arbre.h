@@ -3,6 +3,7 @@
 
 #include <stdlib.h>
 #include "arbre.struct.h"
+#include "arbre.h"
 
 Noeud *allocNoeud(unsigned char lettre);
 

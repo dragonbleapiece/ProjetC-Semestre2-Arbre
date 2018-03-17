@@ -1,5 +1,5 @@
 CC=gcc
-CFLAGS=-W -Wall -ansi -pedantic -g
+CFLAGS=-W -Wall -ansi -pedantic -g2
 LDFLAGS=
 EXEC=Lexique
 SRC= $(wildcard *.c)

@@ -16,8 +16,10 @@ Noeud *allocNoeud(unsigned char lettre) {
 }
 
 void freeArbre(Arbre *a) {
-    freeArbre(&(*a)->filsg);
-    freeArbre(&(*a)->frered);
-    free(*a);
-    *a = NULL;
+    if(*a != NULL) {
+        freeArbre(&(*a)->filsg);
+        freeArbre(&(*a)->frered);
+        free(*a);
+        *a = NULL;
+    }
 }

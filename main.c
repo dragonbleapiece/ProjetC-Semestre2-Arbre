@@ -6,10 +6,16 @@
 #include "functions.h"
 #include "arbre.h"
 
-int main(int argc, char *argv[]) {
+int main(int argc, unsigned char *argv[]) {
 
     Arbre a = NULL;
+    unsigned char buffer[51];
+    scanf(" %51s", buffer);
+    addNoeud(&a, buffer);
+    scanf(" %51s", buffer);
+    addNoeud(&a, buffer);
 
+    printArbre(a);
 
     freeArbre(&a);
 
