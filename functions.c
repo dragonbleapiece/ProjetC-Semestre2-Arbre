@@ -1,32 +1,60 @@
 #include <stdio.h>
 #include <stdlib.h>
 #include <string.h>
+#include <ctype.h>
 
 #include "arbre.h"
 #include "functions.h"
 
 
-int addNoeud(Arbre *a, unsigned char *mot) {
+int addNoeud(Arbre *a, const unsigned char *mot) {
     Arbre temp = NULL;
+    unsigned char c = (unsigned char)tolower(*mot);
     if(*a == NULL) {
         *a = allocNoeud(*mot);
         if(*a == NULL) return 0;
-        if(*mot != '\0')
+        if(c != '\0')
         return addNoeud(&(*a)->filsg, mot + 1);
     }
-    if(*mot > (*a)->lettre) {
+    if(c > (*a)->lettre) {
         return addNoeud(&(*a)->frered, mot);
-    } else if(*mot < (*a)->lettre) {
-        temp = *a;
-        *a = allocNoeud(*mot);
-        (*a)->frered = temp;
-        if(*mot != '\0')
+    } else if(*mot == (*a)->lettre) {
+        if(c != '\0')
             return addNoeud(&(*a)->filsg, mot + 1);
-    } else if(*mot == (*a)->lettre && *mot != '\0') {
-        return addNoeud(&(*a)->filsg, mot + 1);
+    } else {
+        temp = *a;
+        *a = allocNoeud(c);
+        if(*a == NULL) return 0;
+        (*a)->frered = temp;
+        if(c != '\0')
+            return addNoeud(&(*a)->filsg, mot + 1);
     }
 
     return 1;
+}
+
+int readMots(FILE *in, Arbre *a) {
+    unsigned char read[MAX];
+    int k = 1;
+    while(fscanf(in, " %51s", read) != EOF && (k = addNoeud(a, read)));
+
+    return k;
+}
+
+int searchMot(Arbre a, const unsigned char *mot) {
+    unsigned char c = (unsigned char)tolower(*mot);
+    if(a == NULL)
+        return 0;
+    if(c > a->lettre) {
+        return searchMot(a->frered, mot);
+    } else if(c == a->lettre) {
+        if(c != '\0')
+            return searchMot(a->filsg, mot + 1);
+        else
+            return 1;
+    } else {
+        return 0;
+    }
 }
 
 void printArbre_rec(Arbre a, unsigned char *buffer, size_t indice) {

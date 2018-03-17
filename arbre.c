@@ -1,5 +1,6 @@
 #include <stdio.h>
 #include <stdlib.h>
+#include <ctype.h>
 
 #include "arbre.struct.h"
 
@@ -7,7 +8,7 @@ Noeud *allocNoeud(unsigned char lettre) {
     Noeud *temp = (Noeud *)malloc(sizeof(*temp));
 
     if(temp != NULL) {
-        temp->lettre = lettre;
+        temp->lettre = (unsigned char)tolower(lettre);
         temp->filsg = NULL;
         temp->frered = NULL;
     }
