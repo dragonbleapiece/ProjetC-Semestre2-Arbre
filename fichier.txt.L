@@ -1,9 +1,9 @@
-ballade
 en
 est
 jamais
+jose
 mais
-michel
 n'est
 parti
 revenu
+vacances

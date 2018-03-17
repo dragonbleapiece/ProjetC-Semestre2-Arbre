@@ -10,5 +10,6 @@ void printArbre(Arbre a, FILE *out);
 int readMots(FILE *in, Arbre *a);
 int searchMot(Arbre a, const unsigned char *mot);
 int constructArbre(Arbre *a, FILE *in);
+void saveArbre(Arbre a, FILE *out);
 
 #endif /* FUNCTIONS_H_INCLUDED */

@@ -18,7 +18,7 @@ int addNoeud(Arbre *a, const unsigned char *mot) {
     }
     if(c > (*a)->lettre) {
         return addNoeud(&(*a)->frered, mot);
-    } else if(*mot == (*a)->lettre) {
+    } else if(c == (*a)->lettre) {
         if(c != '\0')
             return addNoeud(&(*a)->filsg, mot + 1);
     } else {
@@ -57,13 +57,13 @@ int searchMot(Arbre a, const unsigned char *mot) {
     }
 }
 
-void saveNoeud(Arbre a, FILE *out) {
+void saveArbre(Arbre a, FILE *out) {
     unsigned char c;
     if(a != NULL) {
         c = (a->lettre == '\0') ? ' ' : a->lettre;
         fprintf(out, "%c", c);
-        saveNoeud(a->filsg, out);
-        saveNoeud(a->frered, out);
+        saveArbre(a->filsg, out);
+        saveArbre(a->frered, out);
     } else {
         fprintf(out, "\n");
     }
