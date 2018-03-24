@@ -20,103 +20,171 @@ void affiche_UI() {
     printf("6 -- Chercher un mot\n");
 }
 
+void Open(const char name[], FILE **in) {
+        if((*in=fopen(name,"r"))==NULL){
+            fprintf(stderr,"problem opening %s\n",name);
+            exit(1);
+        }
+}
+
+void Save(Arbre a, const char nameDICO[]) {
+    FILE *file;
+    if((file=fopen(nameDICO,"w"))==NULL){
+        fprintf(stderr, "problem create %s\n", nameDICO);
+    } else {
+        saveArbre(a, file);
+        if(fclose(file) != EOF) {
+            printf("Success !\n");
+        }
+    }
+}
+
+void Write(Arbre a, const char nameL[]) {
+    FILE *file;
+    if((file=fopen(nameL,"w"))==NULL){
+        fprintf(stderr, "problem create %s\n", nameL);
+    } else {
+        printArbre(a, file);
+        if(fclose(file) != EOF) {
+            printf("Success !\n");
+        }
+    }
+}
+
+void Search(Arbre a, const char mot[]) {
+    if(searchMot(a, (unsigned char *)mot)) {
+        printf("\"%s\" present !\n", mot);
+    } else {
+        printf("\"%s\" absent...\n", mot);
+    }
+}
+
+void Add(Arbre *a, const unsigned char mot[]) {
+    if(addNoeud(a, mot)) {
+        printf("%s ajoute !\n", mot);
+    } else {
+        printf("Erreur !\n");
+    }
+}
+
+void Construct(Arbre *a, const char name[]) {
+    FILE *file;
+    if((file=fopen(name,"r"))==NULL){
+        fprintf(stderr, "problem opening %s\n", name);
+    } else {
+        freeArbre(a);
+        constructArbre(a, file);
+        if(fclose(file) != EOF) {
+            printf("Success !\n");
+        }
+    }
+}
+
 int main(int argc, char *argv[]) {
 
     Arbre a = NULL;
-    FILE *in, *file;
+    FILE *in;
     char cmd;
     unsigned char mot[MAX];
-
-    char *name = argv[1];
     char nameL[MAX], nameDICO[MAX];
-    sprintf(nameL, "%s.L", name);
-    sprintf(nameDICO, "%s.DICO", name);
+    char *name;
 
     if(argc == 1){
         in = stdout;
         fprintf(stderr,"stdout output\n");
         return EXIT_FAILURE;
     }
-    else if((in=fopen(argv[1],"r"))==NULL){
-        fprintf(stderr,"problem opening %s\n",argv[1]);
-        exit(1);
-    }
 
-    readMots(in, &a);
+    else if(argc == 2) {
 
-    affiche_UI();
+        name = argv[1];
+        Open(name, &in);
 
-    while(scanf(" %c", &cmd) && cmd != 'e') {
-        switch(cmd) {
-            case('0'):
-                if(scanf(" %51s", mot)) {
-                    if(addNoeud(&a, mot)) {
-                        printf("%s ajoute !\n", mot);
+        sprintf(nameL, "%s.L", name);
+        sprintf(nameDICO, "%s.DICO", name);
+
+        readMots(in, &a);
+
+        affiche_UI();
+
+        while(scanf(" %c", &cmd) && cmd != 'e') {
+            switch(cmd) {
+                case('0'):
+                    if(scanf(" %51s", mot)) {
+                        Add(&a, mot);
                     } else {
-                        printf("Erreur !\n");
+                        printf("Entree invalide !");
                     }
-                } else {
-                    printf("Entree invalide !");
-                }
-                break;
-            case('1'):
-                printArbre(a, stdout);
-                break;
-            case('2'):
-                freeArbre(&a);
-                break;
-            case('3'):
-                if((file=fopen(nameL,"w"))==NULL){
-                    fprintf(stderr, "problem create %s\n", nameL);
-                } else {
-                    printArbre(a, file);
-                    if(fclose(file) != EOF) {
-                        printf("Success !\n");
-                    }
-                }
-                break;
-            case('4'):
-                if((file=fopen(nameDICO,"w"))==NULL){
-                    fprintf(stderr, "problem create %s\n", nameDICO);
-                } else {
-                    saveArbre(a, file);
-                    if(fclose(file) != EOF) {
-                        printf("Success !\n");
-                    }
-                }
-                break;
-            case('5'):
-                if(scanf( "%51s", mot) && (strstr((char *)mot, ".DICO") != NULL)) {
-                    if((file=fopen((char *)mot,"r"))==NULL){
-                        fprintf(stderr, "problem opening %s\n", mot);
+                    break;
+                case('1'):
+                    printArbre(a, stdout);
+                    break;
+                case('2'):
+                    freeArbre(&a);
+                    break;
+                case('3'):
+                    Write(a, nameL);
+                    break;
+                case('4'):
+                    Save(a, nameDICO);
+                    break;
+                case('5'):
+                    if(scanf( "%51s", mot) && (strstr((char *)mot, ".DICO") != NULL)) {
+                        Construct(&a, (char *)mot);
                     } else {
-                        freeArbre(&a);
-                        constructArbre(&a, file);
-                        if(fclose(file) != EOF) {
-                            printf("Success !\n");
-                        }
+                        printf("Entree invalide !\n");
                     }
-                } else {
-                    printf("Entree invalide !\n");
-                }
-                break;
-            case('6'):
-                if(scanf(" %51s", mot)) {
-                    if(searchMot(a, mot)) {
-                        printf("\"%s\" present !\n", mot);
+                    break;
+                case('6'):
+                    if(scanf(" %51s", mot)) {
+                        Search(a, mot);
                     } else {
-                        printf("\"%s\" absent...\n", mot);
+                        printf("Entree invalide\n");
                     }
-                } else {
-                    printf("Entree invalide\n");
-                }
-                break;
-            default:
-                break;
+                    break;
+                default:
+                    break;
+            }
         }
     }
 
-    if(argc > 1) fclose(in);
+    else if(argc == 3) {
+
+        name = argv[2];
+        Open(name, &in);
+        sprintf(nameL, "%s.L", name);
+        sprintf(nameDICO, "%s.DICO", name);
+
+        readMots(in, &a);
+
+        if(strcmp(argv[1], "-l") == 0) {
+            printArbre(a, stdout);
+
+        } else if(strcmp(argv[1], "-s") == 0) {
+
+            Write(a, nameL);
+
+        } else if(strcmp(argv[1], "-S") == 0) {
+
+            Save(a, nameDICO);
+
+        }
+    }
+
+    else if(argc == 4 && strcmp(argv[1], "-r") == 0) {
+        Open(argv[3], &in);
+
+        readMots(in, &a);
+
+         if(strlen(argv[2]) < MAX) {
+           Search(a, argv[2]);
+        } else {
+            printf("Entree invalide\n");
+        }
+
+    }
+
+    fclose(in);
     freeArbre(&a);
 
     return EXIT_SUCCESS;
