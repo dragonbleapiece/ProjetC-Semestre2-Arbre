@@ -89,7 +89,7 @@ void Info() {
 	printf("-l nom : affiche les mots du fichier nom dans l'ordre alphabetique.\n");
 	printf("-r Mot nom : signale si le Mot est present dans le fichier nom\n");
 	printf("-s nom : sauvegarde dans l'ordre alphabétique les mots du fichier nom dans un fichier nom.L\n");
-	printf("-S nom : sauvegarde selon le protocole .DICO les mots du fichier nom dans un fichier nom.DICO\n");
+	printf("-S nom : sauvegarde dans le format .DICO les mots du fichier nom dans un fichier nom.DICO\n");
 	
 }
 

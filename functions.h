@@ -41,7 +41,7 @@ int searchMot(Arbre a, const unsigned char *mot);
 */
 int constructArbre(Arbre *a, FILE *in);
 
-/*Sauvegarde dans un fichier les mots de l'arbre suivant le protocole de sauvegarde .DICO.
+/*Sauvegarde dans un fichier les mots de l'arbre suivant la procédure de sauvegarde .DICO.
 	//a : Arbre à sauvegarder
 	/ *out : fichier en écriture
 */
