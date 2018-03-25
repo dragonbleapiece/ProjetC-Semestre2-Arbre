@@ -6,6 +6,8 @@
 #include "functions.h"
 #include "arbre.h"
 
+/*FONCTIONS D'INTERFACE-----------------------------------------------*/
+
 void affiche_UI() {
     printf("====================\n");
     printf("======INTERFACE=====\n");
@@ -80,6 +82,17 @@ void Construct(Arbre *a, const char name[]) {
     }
 }
 
+void Info() {
+	printf("\nINFO\n");
+	printf("-l nom : affiche les mots du fichier nom dans l'ordre alphabetique.\n");
+	printf("-r Mot nom : signale si le Mot est present dans le fichier nom\n");
+	printf("-s nom : sauvegarde dans l'ordre alphabétique les mots du fichier nom dans un fichier nom.L\n");
+	printf("-S nom : sauvegarde selon le protocole .DICO les mots du fichier nom dans un fichier nom.DICO\n");
+	
+}
+
+/*MAIN---------------------------------------------------------*/
+
 int main(int argc, char *argv[]) {
 
     Arbre a = NULL;
@@ -90,8 +103,7 @@ int main(int argc, char *argv[]) {
     char *name;
 
     if(argc == 1){
-        in = stdout;
-        fprintf(stderr,"stdout output\n");
+        Info();
         return EXIT_FAILURE;
     }
 
