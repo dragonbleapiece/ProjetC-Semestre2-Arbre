@@ -24,6 +24,17 @@ void affiche_UI() {
 	printf("Taper 'e' pour mettre fin au programme.\n\n");
 }
 
+void Info() {
+	printf("\nINFO\n");
+	printf("-l nom : affiche les mots du fichier nom dans l'ordre alphabetique.\n");
+	printf("-r Mot nom : signale si le Mot est present dans le fichier nom\n");
+	printf("-s nom : sauvegarde dans l'ordre alphabétique les mots du fichier nom dans un fichier nom.L\n");
+	printf("-S nom : sauvegarde dans le format .DICO les mots du fichier nom dans un fichier nom.DICO\n");
+	
+}
+
+/*FONCTIONS UTILITAIRES-----------------------------------------------*/
+
 void Open(const char name[], FILE **in) {
         if((*in=fopen(name,"r"))==NULL){
             fprintf(stderr,"problem opening %s\n",name);
@@ -84,15 +95,6 @@ void Construct(Arbre *a, const char name[]) {
     }
 }
 
-void Info() {
-	printf("\nINFO\n");
-	printf("-l nom : affiche les mots du fichier nom dans l'ordre alphabetique.\n");
-	printf("-r Mot nom : signale si le Mot est present dans le fichier nom\n");
-	printf("-s nom : sauvegarde dans l'ordre alphabétique les mots du fichier nom dans un fichier nom.L\n");
-	printf("-S nom : sauvegarde dans le format .DICO les mots du fichier nom dans un fichier nom.DICO\n");
-	
-}
-
 /*MAIN---------------------------------------------------------*/
 
 int main(int argc, char *argv[]) {
@@ -143,7 +145,7 @@ int main(int argc, char *argv[]) {
                     Save(a, nameDICO);
                     break;
                 case('5'):
-                    if(scanf( "%51s", mot) && (strstr(mot, ".DICO") != NULL)) {
+                    if(scanf( " %51s", mot) && (strstr(mot, ".DICO") != NULL)) {
                         Construct(&a, (char *)mot);
                     } else {
                         printf("Entree invalide !\n");
