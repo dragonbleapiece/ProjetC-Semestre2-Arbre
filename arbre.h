@@ -1,7 +1,6 @@
 #ifndef ARBRE_H_INCLUDED
 #define ARBRE_H_INCLUDED
 
-#include <stdlib.h>
 #include "arbre.struct.h"
 #include "arbre.h"
 
@@ -11,7 +10,7 @@
 Noeud *allocNoeud(unsigned char lettre);
 
 /*Libère l'Arbre. Lui affecte NULL à la fin.
-	//*a : Arbre à libérer
+	/ *a : Arbre à libérer
 */
 void freeArbre(Arbre *a);
 

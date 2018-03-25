@@ -1,3 +1,4 @@
+/*CUSUMANO Nicolas SCHMID Vincent*/
 #include <stdio.h>
 #include <stdlib.h>
 #include <string.h>
@@ -19,7 +20,8 @@ void affiche_UI() {
     printf("3 -- Sauvegarder Arbre en .L\n");
     printf("4 -- Sauvegarder Arbre en .DICO\n");
     printf("5 -- Construire Arbre a partir du fichier .DICO\n");
-    printf("6 -- Chercher un mot\n");
+    printf("6 -- Chercher un mot\n\n");
+	printf("Taper 'e' pour mettre fin au programme.\n\n");
 }
 
 void Open(const char name[], FILE **in) {
@@ -98,7 +100,7 @@ int main(int argc, char *argv[]) {
     Arbre a = NULL;
     FILE *in;
     char cmd;
-    unsigned char mot[MAX];
+    char mot[MAX];
     char nameL[MAX], nameDICO[MAX];
     char *name;
 
@@ -123,7 +125,7 @@ int main(int argc, char *argv[]) {
             switch(cmd) {
                 case('0'):
                     if(scanf(" %51s", mot)) {
-                        Add(&a, mot);
+                        Add(&a, (unsigned char *)mot);
                     } else {
                         printf("Entree invalide !");
                     }
@@ -141,7 +143,7 @@ int main(int argc, char *argv[]) {
                     Save(a, nameDICO);
                     break;
                 case('5'):
-                    if(scanf( "%51s", mot) && (strstr((char *)mot, ".DICO") != NULL)) {
+                    if(scanf( "%51s", mot) && (strstr(mot, ".DICO") != NULL)) {
                         Construct(&a, (char *)mot);
                     } else {
                         printf("Entree invalide !\n");

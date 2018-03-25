@@ -1,8 +1,6 @@
 #ifndef ARBRE_STRUCT_H_INCLUDED
 #define ARBRE_STRUCT_H_INCLUDED
 
-#include <stdlib.h>
-
 #define MAX 51
 
 typedef struct noeud {
