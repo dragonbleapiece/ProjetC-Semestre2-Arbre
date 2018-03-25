@@ -146,7 +146,7 @@ int main(int argc, char *argv[]) {
                     break;
                 case('5'):
                     if(scanf( " %51s", mot) && (strstr(mot, ".DICO") != NULL)) {
-                        Construct(&a, (char *)mot);
+                        Construct(&a, mot);
                     } else {
                         printf("Entree invalide !\n");
                     }
