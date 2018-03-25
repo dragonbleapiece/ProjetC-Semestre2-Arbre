@@ -198,7 +198,10 @@ int main(int argc, char *argv[]) {
             printf("Entree invalide\n");
         }
 
-    }
+    } else {
+		printf("Trop d'arguments !\n");
+		return EXIT_FAILURE;
+	}
 
     fclose(in);
     freeArbre(&a);
